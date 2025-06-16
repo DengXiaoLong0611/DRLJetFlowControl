@@ -25,17 +25,11 @@ print(signal_generator.query('*IDN?'))
 # set_signal_generator(*action)
 
 
-# 修改后的set_signal_generator函数，加入合成射流开关
-def set_signal_generator(voltage, modulation_frequency, is_on=True):
+# 修改后的set_signal_generator函数，去除合成射流开关
+def set_signal_generator(voltage, modulation_frequency):
     carrier_frequency = 500  # 载波频率Hz，对合成射流压电片的驱动频率
     modulation_depth = 100  # 调制深度 %
     modulation_signal_type = 'SIN'  # 调制信号类型
-
-    if not is_on:
-        # 如果开关关闭，停止输出信号
-        signal_generator.write(':OUTP1 OFF')
-        print("合成射流已关闭")
-        return
 
     # 设置正弦波输出
     signal_generator.write(':SOUR1:FUNC SIN')
@@ -68,6 +62,6 @@ def close_signal_generator():
 if __name__ == '__main__':
     # 仅在直接运行该脚本时执行以下代码
     print(signal_generator.query('*IDN?'))
-    set_signal_generator(20, 6, 1)
+    set_signal_generator(20, 6)
     time.sleep(3)
     close_signal_generator()
